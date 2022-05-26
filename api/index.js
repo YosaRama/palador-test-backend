@@ -1,5 +1,6 @@
 //? Libs
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 8000;
 
@@ -7,6 +8,7 @@ const port = 8000;
 const organization = require("./router/organization");
 
 //? Application
+app.use(cors());
 app.get("/", (req, res) => {
   res.status(200).json({ ping: "pong" });
 });
