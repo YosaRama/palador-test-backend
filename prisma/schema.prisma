@@ -14,5 +14,5 @@ model Organization {
   id          String @id @default(auto()) @map("_id") @db.ObjectId
   employee_id Int    @unique
   name        String
-  manager_id  Int?
+  manager_id  Int?   @unique
 }

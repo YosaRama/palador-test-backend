@@ -1,7 +1,9 @@
 const prisma = require("../database/index");
 
 const getAllEmployee = async () => {
-  const employee = await prisma.organization.findMany();
+  const employee = await prisma.organization.findMany({
+    orderBy: { employee_id: "desc" },
+  });
   return employee;
 };
 
@@ -33,7 +35,7 @@ const updateEmployee = async (id, data) => {
     where: { employee_id: id },
     data: {
       name: name,
-      manager_id: +manager_id,
+      manager_id: manager_id ? +manager_id : null,
     },
   });
 };
@@ -44,10 +46,18 @@ const deleteEmployee = async (id) => {
   });
 };
 
+const deleteDependantEmployee = async (id) => {
+  await prisma.organization.update({
+    where: { manager_id: +id },
+    data: { manager_id: null },
+  });
+};
+
 module.exports = {
   getAllEmployee: getAllEmployee,
   getSingleEmployee: getSingleEmployee,
   createEmployee: createEmployee,
   updateEmployee: updateEmployee,
   deleteEmployee: deleteEmployee,
+  deleteDependantEmployee: deleteDependantEmployee,
 };

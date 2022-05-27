@@ -12,6 +12,7 @@ const {
   createEmployee,
   deleteEmployee,
   updateEmployee,
+  deleteDependantEmployee,
 } = require("../controller/organization");
 
 //? Get all employee
@@ -96,10 +97,13 @@ router.delete("/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const deletedEmployee = await deleteEmployee(+id);
+    const deletedDependantEmployee = await deleteDependantEmployee(+id);
+    console.log(deletedDependantEmployee);
     res.status(200).json({
       success: true,
       message: "Successfully delete employee",
       data: deletedEmployee,
+      dependant: deleteDependantEmployee,
     });
   } catch (error) {
     res.status(200).json({
