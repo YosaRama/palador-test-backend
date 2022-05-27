@@ -83,7 +83,6 @@ router.put("/:id", async (req, res) => {
       data: editedEmployee,
     });
   } catch (error) {
-    console.log(error);
     res.status(200).json({
       success: false,
       message: "Failed to update employee",
@@ -98,7 +97,6 @@ router.delete("/:id", async (req, res) => {
   try {
     const deletedEmployee = await deleteEmployee(+id);
     const deletedDependantEmployee = await deleteDependantEmployee(+id);
-    console.log(deletedDependantEmployee);
     res.status(200).json({
       success: true,
       message: "Successfully delete employee",
